@@ -20,4 +20,8 @@
   changed = green
   untracked = cyan
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
+[alias]
+  dw = diff --word-diff=plain
+[github]
+	user = freeformz
