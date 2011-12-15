@@ -20,6 +20,13 @@ map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 "" Buffer toggle
 nnoremap <leader><leader> <c-^>
 
+"" Show statusline always and make it pretty
+""set modeline
+set ls=2
+set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y%=%c,%l/%L\ %P
+
+map <Leader># <Plug>NERDCommenterToggle
+
 "" Map <C-Movement Keys> to move around windows
 map <C-L> <C-W>l
 map <C-K> <C-W>k
