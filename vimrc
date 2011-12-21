@@ -13,9 +13,13 @@ set guifont=Andale\ Mono:h14
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
-"" Map in CommandT
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
+"" Map in CtrlP
+map <leader>f :CtrlP %:p:h<cr>
+map <leader>F :CtrlPMRU<cr>
+map <leader>b :CtrlPBuffer<cr>
+
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
+"" map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 "" Buffer toggle
 nnoremap <leader><leader> <c-^>
@@ -26,6 +30,10 @@ set ls=2
 set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y%=%c,%l/%L\ %P
 
 map <Leader># <Plug>NERDCommenterToggle
+
+" Adjust viewports to the same size
+map <Leader>= <C-w>=
+imap <Leader>= <Esc> <C-w>=
 
 "" Map <C-Movement Keys> to move around windows
 map <C-L> <C-W>l
