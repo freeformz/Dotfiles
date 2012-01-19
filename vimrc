@@ -2,6 +2,8 @@ let mapleader=","
 
 set hidden
 
+set directory=~/.vim/swap
+
 "" Load pathogen plugins
 call pathogen#infect() 
 
