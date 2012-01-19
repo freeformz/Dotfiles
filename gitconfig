@@ -25,3 +25,5 @@
   dw = diff --word-diff=plain
 [github]
 	user = freeformz
+[push]
+  default = current
