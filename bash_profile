@@ -32,10 +32,14 @@ docbrown() {
 #MOAR visible
 export LSCOLORS="Exfxcxdxbxegedabagacad"
 
+#GO Variables
+export GOROOT=~/devel/go
+export GOPATH=~/
+
 #Spiffy PS1
 export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m\]\n\[\e[1;31m\]\T\[\e[0m\] \[\e[1;36m\]$(ruby -v | cut -d " " -f 1-2)\[\e[0m\]\n> ' #\e[37m\]'
 
-export PATH=~/.rbenv/bin:~/.rbenv/shims:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/.rbenv/bin:~/.rbenv/shims:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
 
 export EDITOR=/usr/local/bin/mvim
 
