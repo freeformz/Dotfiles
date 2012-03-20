@@ -30,6 +30,10 @@ docbrown() {
   popd
 }
 
+gosho() {
+  cd ~/devel/shogun
+}
+
 urlencode() {
   ruby -r cgi -e "puts CGI::escape('${*}')"
 }
