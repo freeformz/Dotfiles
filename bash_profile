@@ -30,6 +30,27 @@ docbrown() {
   popd
 }
 
+urlencode() {
+  ruby -r cgi -e "puts CGI::escape('${*}')"
+}
+
+source ~/encrypted/prowl.key
+prowl() {
+  if [ -z "$1" ]; then
+    echo "prowl requires at least one argument (the event)"
+    return 1
+  else
+    EVENT="&event=$(urlencode $1)"
+  fi
+
+  if [ ! -z "$2" ]; then
+    DESCRIPTION="&description=$(urlencode $2)"
+  fi
+
+  curl --silent "https://api.prowlapp.com/publicapi/add?apikey=${PROWL_KEY}&application=$(urlencode $(hostname)).bash${EVENT}${DESCRIPTION}" > /dev/null 2>&1
+  return $?
+}
+
 #MOAR visible
 export LSCOLORS="Exfxcxdxbxegedabagacad"
 
