@@ -10,6 +10,7 @@ fi
 alias ls="ls -G"
 alias h="heroku"
 alias g="git"
+alias git="hub"
 
 gpsm() {
   echo "pulling origin" &&
