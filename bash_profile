@@ -23,13 +23,6 @@ gpsm() {
   git push shogun master
 }
 
-docbrown() {
-  pushd . 
-  cd devel/docbrown
-  bundle exec bin/docbrown $*
-  popd
-}
-
 gosho() {
   cd ~/devel/shogun
 }
