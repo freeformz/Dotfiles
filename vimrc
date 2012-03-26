@@ -4,6 +4,8 @@ set hidden
 
 set directory=~/.vim/swap
 
+let g:ctrlp_working_path_mode = 0
+
 "" Load pathogen plugins
 call pathogen#infect() 
 
@@ -16,7 +18,7 @@ set guifont=Andale\ Mono:h14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 "" Map in CtrlP
-map <leader>f :CtrlP %:p:h<cr>
+map <leader>f :CtrlP<cr>
 map <leader>F :CtrlPMRU<cr>
 map <leader>b :CtrlPBuffer<cr>
 
