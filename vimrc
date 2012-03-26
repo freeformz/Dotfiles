@@ -12,7 +12,7 @@ call pathogen#infect()
 "" Looks good
 colorscheme koehler
 
-"" Looks good enough and bit enough I can read
+"" Looks good enough and big enough I can read
 set guifont=Andale\ Mono:h14
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
