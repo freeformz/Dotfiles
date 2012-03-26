@@ -22,6 +22,8 @@ map <leader>f :CtrlP<cr>
 map <leader>F :CtrlPMRU<cr>
 map <leader>b :CtrlPBuffer<cr>
 
+map <leader>z :ZoomWin<cr>
+
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
 "" map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
