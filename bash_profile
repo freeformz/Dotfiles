@@ -61,6 +61,7 @@ export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m
 export PATH=~/.rbenv/bin:~/.rbenv/shims:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
 
 export EDITOR=/usr/local/bin/mvim
+export PSQL_EDITOR="/usr/local/bin/vim -c ':set ft=sql'"
 
 #Add identities if they are not loaded
 
