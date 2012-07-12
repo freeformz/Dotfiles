@@ -76,7 +76,7 @@ export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m
 
 export HEROKU=/usr/local/heroku
 export PG=/Applications/Postgres.app/Contents/MacOS
-export PATH=$HEROKU/bin:~/.rbenv/bin:~/.rbenv/shims:$PG/bin:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$HEROKU/bin:~/.rbenv/bin:$PG/bin:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
 
 export EDITOR=/usr/local/bin/mvim
 export PSQL_EDITOR="/usr/local/bin/mvim -f -c ':set ft=sql'"
@@ -91,3 +91,5 @@ fi
 export WCOLL=hosts.txt
 export PDSH_SSH_ARGS_APPEND="-o StrictHostKeyChecking=no"
 export PDSH_RCMD_TYPE="ssh"
+
+eval "$(rbenv init -)"
