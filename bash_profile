@@ -9,8 +9,28 @@ fi
 #Misc Aliases
 alias ls="ls -G"
 alias h="heroku"
+alias hs="heroku sudo"
 alias g="git"
 alias git="hub"
+alias gosho="cd ~/devel/shogun"
+alias gphm="git push heroku master"
+alias rspec="bundle exec rspec"
+
+shocon() {
+  app=${1:-shogun}
+  if [ "$app" != "shogun" ]; then
+    app="shogun-$app"
+  fi
+  echo "Console on $app"
+  h run ./console -a $app
+}
+
+hexport() {
+  var_name=$1
+  app=$2
+
+  export $(heroku config -s -a $app | grep "^$var_name")
+}
 
 gpsm() {
   echo "pulling origin" &&
@@ -21,10 +41,6 @@ gpsm() {
   git push &&
   echo "pushing shogun" &&
   git push shogun master
-}
-
-gosho() {
-  cd ~/devel/shogun
 }
 
 urlencode() {
@@ -58,10 +74,12 @@ export GOPATH=~/
 #Spiffy PS1
 export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m\]\n\[\e[1;31m\]\T\[\e[0m\] \[\e[1;36m\]$(ruby -v | cut -d " " -f 1-2)\[\e[0m\]\n> ' #\e[37m\]'
 
-export PATH=~/.rbenv/bin:~/.rbenv/shims:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
+export HEROKU=/usr/local/heroku
+export PG=/Applications/Postgres.app/Contents/MacOS
+export PATH=$HEROKU/bin:~/.rbenv/bin:~/.rbenv/shims:$PG/bin:$GOROOT/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
 
 export EDITOR=/usr/local/bin/mvim
-export PSQL_EDITOR="/usr/local/bin/vim -c ':set ft=sql'"
+export PSQL_EDITOR="/usr/local/bin/mvim -f -c ':set ft=sql'"
 
 #Add identities if they are not loaded
 

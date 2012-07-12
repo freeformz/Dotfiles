@@ -25,3 +25,5 @@
 	user = freeformz
 [push]
   default = current
+[core]
+	editor = mvim -f
