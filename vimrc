@@ -10,7 +10,7 @@ let g:ctrlp_working_path_mode = 0
 call pathogen#infect() 
 
 "" Looks good
-colorscheme koehler
+"" colorscheme koehler
 
 "" Looks good enough and big enough I can read
 set guifont=Andale\ Mono:h14

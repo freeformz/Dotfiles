@@ -1,4 +1,3 @@
-
 #Bash Completion
 if which brew 2>&1 > /dev/null; then
   if [ -f `brew --prefix`/etc/bash_completion ]; then
@@ -9,21 +8,13 @@ fi
 #Misc Aliases
 alias ls="ls -G"
 alias h="heroku"
-alias hs="heroku sudo"
+alias hlt="heroku logs --tail"
 alias g="git"
 alias git="hub"
-alias gosho="cd ~/devel/shogun"
 alias gphm="git push heroku master"
+alias gdc="git diff --cached"
+alias gd="git diff"
 alias rspec="bundle exec rspec"
-
-shocon() {
-  app=${1:-shogun}
-  if [ "$app" != "shogun" ]; then
-    app="shogun-$app"
-  fi
-  echo "Console on $app"
-  h run ./console -a $app
-}
 
 hexport() {
   var_name=$1
@@ -32,22 +23,14 @@ hexport() {
   export $(heroku config -s -a $app | grep "^$var_name")
 }
 
-gpsm() {
-  echo "pulling origin" &&
-  git pull &&
-  echo "pulling shogun" &&
-  git pull shogun master &&
-  echo "pushing origin" &&
-  git push &&
-  echo "pushing shogun" &&
-  git push shogun master
-}
-
 urlencode() {
   ruby -r cgi -e "puts CGI::escape('${*}')"
 }
 
-source ~/encrypted/prowl.key
+if [ -r ~/encrypted/prowl.key ]; then
+  . ~/encrypted/prowl.key
+fi
+
 prowl() {
   if [ -z "$1" ]; then
     echo "prowl requires at least one argument (the event)"
@@ -76,16 +59,9 @@ export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m
 export PG=/Applications/Postgres.app/Contents/MacOS
 export PATH=~/.rbenv/bin:$PG/bin:$GOPATH/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
 eval "$(rbenv init -)"
-eval "$(ion-client shell)"
 
 export EDITOR=/usr/local/bin/mvim
 export PSQL_EDITOR="/usr/local/bin/mvim -f -c ':set ft=sql'"
-
-#Add identities if they are not loaded
-
-if ! ssh-add -l | grep -q heroku_rsa; then
-  ssh-add ~/.ssh/heroku_rsa
-fi
 
 #Some pdsh variables
 export WCOLL=hosts.txt
@@ -94,3 +70,7 @@ export PDSH_RCMD_TYPE="ssh"
 
 export HEROKU=/usr/local/heroku
 export PATH=$HEROKU/bin:$PATH
+
+if [ -r ~/.bash_private ]; then
+  . ~/.bash_private
+fi
