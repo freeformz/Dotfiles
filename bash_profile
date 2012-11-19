@@ -75,15 +75,15 @@ if [ -d ~/.rbenv/bin ]; then
   export ADDPATH=~/.rbenv/bin:$ADDPATH
 fi
 
-if which rbenv 2>&1 > /dev/null; then
-  eval "$(rbenv init -)"
-fi
-
 if [ -d ~/bin ]; then
   export ADDPATH=~/bin:$ADDPATH
 fi
 
 export PATH=$ADDPATH:/usr/local/bin:/usr/local/sbin:$PATH
+
+if which rbenv 2>&1 > /dev/null; then
+  eval "$(rbenv init -)"
+fi
 
 export EDITOR=/usr/local/bin/mvim
 export PSQL_EDITOR="/usr/local/bin/mvim -f -c ':set ft=sql'"
