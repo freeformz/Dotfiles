@@ -74,3 +74,7 @@ export PATH=$HEROKU/bin:$PATH
 if [ -r ~/.bash_private ]; then
   . ~/.bash_private
 fi
+
+if [ -r ~/.bash_work ]; then
+  . ~/.bash_work
+fi
