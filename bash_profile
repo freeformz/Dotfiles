@@ -53,12 +53,33 @@ export LSCOLORS="Exfxcxdxbxegedabagacad"
 #GO Variables
 export GOPATH=~/go
 
+export ADDPATH=""
+
+if [ -d /usr/local/share/python ]; then
+  export ADDPATH=/usr/local/share/python:$ADDPATH
+fi
+
+if [ -e $GOPATH ]; then
+  export ADDPATH=$GOPATH/bin:$ADDPATH
+fi
+
 #Spiffy PS1
 export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m\]\n\[\e[1;31m\]\T\[\e[0m\] \[\e[1;36m\]$(ruby -v | cut -d " " -f 1-2)\[\e[0m\]\n> ' #\e[37m\]'
 
 export PG=/Applications/Postgres.app/Contents/MacOS
-export PATH=~/.rbenv/bin:$PG/bin:$GOPATH/bin:/usr/local/share/python:/usr/local/bin:/usr/local/sbin:$PATH
-eval "$(rbenv init -)"
+if [ -d $PG ]; then
+  export ADDPATH=$PG/bin:$ADDPATH
+fi
+
+if [ -d ~/.rbenv/bin ]; then
+  export ADDPATH=~/.rbenv/bin:$ADDPATH
+fi
+
+export PATH=$ADDPATH:/usr/local/bin:/usr/local/sbin:$PATH
+
+if which rbenv 2>&1 > /dev/null; then
+  eval "$(rbenv init -)"
+fi
 
 export EDITOR=/usr/local/bin/mvim
 export PSQL_EDITOR="/usr/local/bin/mvim -f -c ':set ft=sql'"
