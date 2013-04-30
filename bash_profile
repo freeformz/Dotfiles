@@ -5,6 +5,10 @@ if which brew 2>&1 > /dev/null; then
   fi
 fi
 
+if [ -f ~/.git-prompt.sh ]; then
+  source ~/.git-prompt.sh
+fi
+
 #Misc Aliases
 alias ls="ls -G"
 alias h="heroku"
