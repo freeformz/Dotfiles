@@ -9,6 +9,7 @@ fi
 alias ls="ls -G"
 alias h="heroku"
 alias hlt="heroku logs --tail"
+alias hlta="heroku logs --tail -a"
 alias g="git"
 alias git="hub"
 alias gphm="git push heroku master"
