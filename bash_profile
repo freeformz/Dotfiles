@@ -67,11 +67,6 @@ fi
 #Spiffy PS1
 export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m\]\n\[\e[1;31m\]\T\[\e[0m\] \[\e[1;36m\]$(ruby -v | cut -d " " -f 1-2)\[\e[0m\]\n> ' #\e[37m\]'
 
-export PG=/Applications/Postgres.app/Contents/MacOS
-if [ -d $PG ]; then
-  export ADDPATH=$PG/bin:$ADDPATH
-fi
-
 if [ -d ~/.rbenv/bin ]; then
   export ADDPATH=~/.rbenv/bin:$ADDPATH
 fi
