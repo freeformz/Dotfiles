@@ -9,6 +9,7 @@ if [ -f ~/.git-prompt.sh ]; then
   source ~/.git-prompt.sh
 fi
 
+export LIFE_REPO="freeformz/life"
 #Misc Aliases
 alias ls="ls -G"
 alias h="heroku"
@@ -20,6 +21,8 @@ alias gphm="git push heroku master"
 alias gdc="git diff --cached"
 alias gd="git diff"
 alias rspec="bundle exec rspec"
+alias todo="ghi open --claim -- $LIFE_REPO"
+alias todos="ghi list -- $LIFE_REPO"
 
 hexport() {
   var_name=$1
