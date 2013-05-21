@@ -13,6 +13,8 @@ export LIFE_REPO="freeformz/life"
 #Misc Aliases
 alias ls="ls -G"
 alias h="heroku"
+alias hr="heroku run"
+alias hrb="heroku run bash -a"
 alias hlt="heroku logs --tail"
 alias hlta="heroku logs --tail -a"
 alias g="git"
