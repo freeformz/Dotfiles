@@ -73,6 +73,16 @@ if [ -e $GOPATH ]; then
   export ADDPATH=$GOPATH/bin:$ADDPATH
 fi
 
+if [ -e /usr/libexec/java_home ]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+export AWS_AUTO_SCALING_HOME=~/bin/AutoScaling-1.0.61.2
+
+if [ -e $AWS_AUTO_SCALING_HOME ]; then
+  export ADDPATH=$AWS_AUTO_SCALING_HOME/bin:$ADDPATH
+fi
+
 #Spiffy PS1
 export PS1='\[\e[1;33m\]\u@\H\[\e[0m\]\[\e[1;36m\] \w$(__git_ps1 " (%s)")\[\e[0m\]\n\[\e[1;31m\]\T\[\e[0m\] \[\e[1;36m\]$(ruby -v | cut -d " " -f 1-2)\[\e[0m\]\n> ' #\e[37m\]'
 
@@ -108,3 +118,8 @@ fi
 if [ -r ~/.bash_work ]; then
   . ~/.bash_work
 fi
+
+export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
+export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
+export EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
+export AWS_ELB_HOME="/usr/local/Library/LinkedKegs/elb-tools/jars"
