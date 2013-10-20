@@ -24,6 +24,8 @@ map <leader>b :CtrlPBuffer<cr>
 
 map <leader>z :ZoomWin<cr>
 
+map <leader>t :TagbarToggle<cr>
+
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
 "" map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
@@ -68,3 +70,44 @@ set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 
 autocmd BufNewFile,BufRead *.json set ft=javascript
+au BufRead,BufNewFile *.md set filetype=markdown
+
+"" Super Tab or gocode
+let g:SuperTabDefaultCompletionType = "context"
+
+"" For go files :Fmt on save, preserving folds:
+"" http://stackoverflow.com/questions/10969366/vim-automatically-formatting-golang-source-code-when-saving/10969574#10969574
+autocmd FileType go autocmd BufWritePre <buffer> execute "normal! mz:mkview\<esc>:Fmt\<esc>:loadview\<esc>`z"
+
+"" update ctags on save. Is this really necessary given what follows?
+au BufWritePost *.go silent! !gotags -sort -silent *go > tags &
+au BufReadPost *.go silent! !gotags -sort -silent *go > tags &
+
+"" gotags support for tagbar
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
