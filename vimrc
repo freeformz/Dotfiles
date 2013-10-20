@@ -35,7 +35,7 @@ nnoremap <leader><leader> <c-^>
 "" Show statusline always and make it pretty
 ""set modeline
 set ls=2
-set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y%=%c,%l/%L\ %P
+set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y\ %#warningmsg#%{SyntasticStatuslineFlag()}%*\ %=%c,%l/%L\ %P
 
 map <Leader># <Plug>NERDCommenterToggle
 
@@ -74,6 +74,9 @@ au BufRead,BufNewFile *.md set filetype=markdown
 
 "" Super Tab or gocode
 let g:SuperTabDefaultCompletionType = "context"
+
+"" Check syntax on open
+let g:syntastic_check_on_open=1
 
 "" For go files :Fmt on save, preserving folds:
 "" http://stackoverflow.com/questions/10969366/vim-automatically-formatting-golang-source-code-when-saving/10969574#10969574
