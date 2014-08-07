@@ -10,7 +10,7 @@ let g:ctrlp_working_path_mode = 0
 call pathogen#infect() 
 
 "" Looks good
-colorscheme delek
+colorscheme torte
 
 "" Looks good enough and big enough I can read
 set guifont=Andale\ Mono:h14
@@ -25,6 +25,19 @@ map <leader>b :CtrlPBuffer<cr>
 map <leader>z :ZoomWin<cr>
 
 map <leader>t :TagbarToggle<cr>
+
+let g:syntastic_auto_loc_list = 0
+map <leader>e :Errors<cr>
+map <leader>1 :ll 1<cr>
+map <leader>2 :ll 2<cr>
+map <leader>3 :ll 3<cr>
+map <leader>4 :ll 4<cr>
+map <leader>5 :ll 5<cr>
+map <leader>6 :ll 6<cr>
+map <leader>7 :ll 7<cr>
+map <leader>8 :ll 8<cr>
+map <leader>9 :ll 9<cr>
+map <leader>0 :ll 10<cr>
 
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
 "" map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
@@ -78,10 +91,6 @@ let g:SuperTabDefaultCompletionType = "context"
 "" Check syntax on open
 let g:syntastic_check_on_open=1
 
-"" For go files :Fmt on save, preserving folds:
-"" http://stackoverflow.com/questions/10969366/vim-automatically-formatting-golang-source-code-when-saving/10969574#10969574
-autocmd FileType go autocmd BufWritePre <buffer> execute "normal! mz:mkview\<esc>:Fmt\<esc>:loadview\<esc>`z"
-
 "" update ctags on save. Is this really necessary given what follows?
 au BufWritePost *.go silent! !gotags -sort -silent *go > tags &
 au BufReadPost *.go silent! !gotags -sort -silent *go > tags &
@@ -114,3 +123,12 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
+
+let g:vim_markdown_folding_disabled=1
+
+noremap <leader>w :exe "GoDef" <CR>
+au Filetype go nnoremap <leader>v :vsp <CR>:exe "GoDef" <CR>
+au Filetype go nnoremap <leader>s :sp <CR>:exe "GoDef"<CR>
+au Filetype go nnoremap <leader>t :tab split <CR>:exe "GoDef"<CR>
+au Filetype go nnoremap <buffer> <leader>i :exe 'GoImport ' . expand('<cword>')<CR>
+

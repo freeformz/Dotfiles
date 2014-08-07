@@ -62,8 +62,7 @@ export LSCOLORS="Exfxcxdxbxegedabagacad"
 
 #GO Variables
 export GOPATH=~/go
-
-export ADDPATH=""
+export GOROOT=/usr/local/go
 
 if [ -d /usr/local/share/python ]; then
   export ADDPATH=/usr/local/share/python:$ADDPATH
@@ -71,6 +70,14 @@ fi
 
 if [ -e $GOPATH ]; then
   export ADDPATH=$GOPATH/bin:$ADDPATH
+fi
+
+if [ -e $GOROOT ]; then
+  export ADDPATH=$GOROOT/bin:$ADDPATH
+fi
+
+if [ -x "$(which npm)" ]; then
+  export ADDPATH="$(npm config get prefix)/bin":$ADDPATH
 fi
 
 if [ -e /usr/libexec/java_home ]; then
@@ -121,5 +128,5 @@ fi
 
 export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
 export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
-export EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
-export AWS_ELB_HOME="/usr/local/Library/LinkedKegs/elb-tools/jars"
+export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.6.12.0/libexec"
+export AWS_ELB_HOME="/usr/local/Cellar/elb-tools/1.0.23.0/libexec"
