@@ -51,7 +51,7 @@ ZSH_THEME="freeformz"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git hk)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -147,3 +147,6 @@ export AWS_ELB_HOME="/usr/local/Cellar/elb-tools/1.0.23.0/libexec"
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 source /usr/local/share/zsh/site-functions/_aws
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
