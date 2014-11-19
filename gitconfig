@@ -27,6 +27,10 @@
   default = current
 [core]
 	editor = /usr/local/bin/vim
-	excludesfile = /Users/edwardam/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [credential]
 	helper = osxkeychain
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f

@@ -62,6 +62,13 @@ map <C-K> <C-W>k
 map <C-J> <C-W>j
 map <C-H> <C-W>h
 
+"  Tagbar Stuff
+map <Leader><Tab> :TagbarToggle<CR>
+
+" YouCompleteMe
+"
+let g:ycm_collect_identifiers_from_tags_files = 1
+
 set nocompatible                " choose no compatibility with legacy vi
 syntax enable
 set encoding=utf-8
@@ -91,7 +98,7 @@ let g:SuperTabDefaultCompletionType = "context"
 "" Check syntax on open
 let g:syntastic_check_on_open=1
 
-"" update ctags on save. Is this really necessary given what follows?
+"" update gotags on save/read
 au BufWritePost *.go silent! !gotags -sort -silent *go > tags &
 au BufReadPost *.go silent! !gotags -sort -silent *go > tags &
 
