@@ -62,8 +62,6 @@ alias hr="heroku run"
 alias hrb="heroku run bash -a"
 alias hlt="heroku logs --tail"
 alias hlta="heroku logs --tail -a"
-alias g="git"
-alias git="hub"
 alias gphm="git push heroku master"
 alias gdc="git diff --cached"
 alias gd="git diff"
@@ -147,3 +145,9 @@ export AWS_ELB_HOME="/usr/local/Cellar/elb-tools/1.0.23.0/libexec"
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 source /usr/local/share/zsh/site-functions/_aws
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+### Boot 2 Docker
+$(boot2docker shellinit)
