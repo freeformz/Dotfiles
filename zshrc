@@ -66,6 +66,26 @@ alias gphm="git push heroku master"
 alias gdc="git diff --cached"
 alias gd="git diff"
 alias rspec="bundle exec rspec"
+alias ggt="godep go test"
+alias hm="hipchat-message"
+
+# So github.com/constabulary/gb works
+unalias gb
+
+git-heroku() {
+  export GIT_AUTHOR_NAME="Edward Muller"
+  export GIT_AUTHOR_EMAIL="edward@heroku.com"
+}
+
+git-sfdc() {
+  export GIT_AUTHOR_NAME="Edward Muller"
+  export GIT_AUTHOR_EMAIL="emuller@salesforce.com"
+}
+
+git-home() {
+  unset GIT_AUTHOR_NAME
+  unset GIT_AUTHOR_EMAIL
+}
 
 #MOAR visible
 #export LSCOLORS="Exfxcxdxbxegedabagacad"
@@ -149,5 +169,7 @@ source /usr/local/share/zsh/site-functions/_aws
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-### Boot 2 Docker
-$(boot2docker shellinit)
+export CDPATH=~/go/src/github.com/heroku:~/go/src/github.com/freeformz:~/devel
+
+### Docker Toolbox
+. '/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh'

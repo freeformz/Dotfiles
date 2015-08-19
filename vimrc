@@ -1,106 +1,114 @@
-let mapleader=","
+set nocompatible
+filetype off
 
-set hidden
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'tpope/vim-sensible'
+
+Plugin 'jlanzarotta/bufexplorer'
+
+Plugin 'fatih/vim-go'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'majutsushi/tagbar'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'kien/ctrlp.vim'
+
+"Plugin 'scrooloose/syntastic'
+
+Plugin 'mileszs/ack.vim'
+
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+Plugin 'chriskempson/base16-vim'
+
+Plugin 'tpope/vim-surround'
+
+call vundle#end()
 
 set directory=~/.vim/swap
 
-let g:ctrlp_working_path_mode = 0
+syntax on
+filetype plugin indent on
 
-"" Load pathogen plugins
-call pathogen#infect() 
+let mapleader=","
 
-"" Looks good
-colorscheme torte
+colorscheme molokai
 
-"" Looks good enough and big enough I can read
-set guifont=Andale\ Mono:h14
-
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-
-"" Map in CtrlP
 map <leader>f :CtrlP<cr>
-map <leader>F :CtrlPMRU<cr>
-map <leader>b :CtrlPBuffer<cr>
+map <leader>F :CtrlPBuffer<cr>
+map <leader>c :ccl<cr>
+map <leader>, :bp<cr>
 
 map <leader>z :ZoomWin<cr>
 
 map <leader>t :TagbarToggle<cr>
 
-let g:syntastic_auto_loc_list = 0
-map <leader>e :Errors<cr>
-map <leader>1 :ll 1<cr>
-map <leader>2 :ll 2<cr>
-map <leader>3 :ll 3<cr>
-map <leader>4 :ll 4<cr>
-map <leader>5 :ll 5<cr>
-map <leader>6 :ll 6<cr>
-map <leader>7 :ll 7<cr>
-map <leader>8 :ll 8<cr>
-map <leader>9 :ll 9<cr>
-map <leader>0 :ll 10<cr>
-
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
-"" map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-
-"" Buffer toggle
-nnoremap <leader><leader> <c-^>
-
-"" Show statusline always and make it pretty
-""set modeline
-set ls=2
-set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y\ %#warningmsg#%{SyntasticStatuslineFlag()}%*\ %=%c,%l/%L\ %P
+"map <leader>e :Errors<cr>
+map <leader>z :ZoomWin<cr>
 
 map <Leader># <Plug>NERDCommenterToggle
 
-" Adjust viewports to the same size
-map <Leader>= <C-w>=
-imap <Leader>= <Esc> <C-w>=
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>d <Plug>(go-doc)
+"au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+"au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <leader>gr <Plug>(go-run)
+au FileType go nmap <leader>gb <Plug>(go-build)
+au FileType go nmap <leader>gt <Plug>(go-test)
+au FileType go nmap <leader>gc <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>e <Plug>(go-rename)
 
-"" Map <C-Movement Keys> to move around windows
+
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+
+set ls=2
+set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y\ %=%c,%l/%L\ %P
+"set statusline=%t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]\ %h%m%r%y\ %#warningmsg#%{SyntasticStatuslineFlag()}%*\ %=%c,%l/%L\ %P
+
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.rbc,*.class,coverage/*
+
+let g:UltiSnipsExpandTrigger="<C-s>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+"Window movement keys
 map <C-L> <C-W>l
 map <C-K> <C-W>k
 map <C-J> <C-W>j
 map <C-H> <C-W>h
 
-"  Tagbar Stuff
-map <Leader><Tab> :TagbarToggle<CR>
-
-" YouCompleteMe
-"
 let g:ycm_collect_identifiers_from_tags_files = 1
-
-set nocompatible                " choose no compatibility with legacy vi
-syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
-filetype plugin indent on       " load file type plugins + indentation
-
-"" Whitespace
-set nowrap                      " don't wrap lines
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode
-
-autocmd FileType go :setlocal noexpandtab
-
-"" Searching
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
+set number                      " line numbers
 
+autocmd FileType go :setlocal noexpandtab
 autocmd BufNewFile,BufRead *.json set ft=javascript
 au BufRead,BufNewFile *.md set filetype=markdown
 
-"" Super Tab or gocode
-let g:SuperTabDefaultCompletionType = "context"
-
-"" Check syntax on open
-let g:syntastic_check_on_open=1
-
 "" update gotags on save/read
-au BufWritePost *.go silent! !gotags -sort -silent *go > tags &
-au BufReadPost *.go silent! !gotags -sort -silent *go > tags &
+"au BufWritePost *.go silent! !gotags -sort -silent *go > tags &
+"au BufReadPost *.go silent! !gotags -sort -silent *go > tags &
 
 "" gotags support for tagbar
 let g:tagbar_type_go = {
@@ -136,10 +144,15 @@ let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+" YCM options after these other plugins (the defaults of vim-go changed
+" somehow)
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_auto_trigger = 1
+set completeopt-=preview
 
-" ...
 let g:vim_markdown_folding_disabled=1
+set completeopt=menu
