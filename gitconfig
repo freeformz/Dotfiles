@@ -21,10 +21,17 @@
   untracked = cyan
 [alias]
   dw = diff --word-diff=plain
+  change = codereview change
+  gofmt = codereview gofmt
+  mail = codereview mail
+  pending = codereview pending
+  submit = codereview submit
+  sync = codereview sync
 [github]
 	user = freeformz
 [push]
   default = current
+	followTags = true
 [core]
 	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore_global
@@ -42,3 +49,7 @@
 	clean = git lfs clean %f
 	smudge = git lfs smudge %f
 	required = true
+[http "https://git.staging.herokudev.com/"]
+	sslVerify = false
+[hub]
+	protocol = https

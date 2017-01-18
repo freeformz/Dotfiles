@@ -7,10 +7,13 @@
 --type-set=asciidoc=.asc
 --type-set=mustache=.mustache
 --type-set=python=.py
+--noignore-dir=cmd
 --ignore-dir=log
 --ignore-dir=tmp
 --ignore-dir=doc
 --ignore-dir=coverage
+--ignore-file=ext:a
+--ignore-file=ext:s
 --sort-files
 --color
 --follow

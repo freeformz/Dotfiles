@@ -98,9 +98,8 @@ addpath() {
 
 #GO Variables
 export GOPATH=~/go
-export GOROOT=/usr/local/go
 addpath $GOPATH/bin
-addpath $GOROOT/bin
+addpath /usr/local/go/bin
 
 # brew installed python stuff
 addpath /usr/local/share/python
@@ -171,5 +170,63 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 export CDPATH=~/go/src/github.com/heroku:~/go/src/github.com/freeformz:~/devel
 
-### Docker Toolbox
-. '/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh'
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/emuller/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/emuller/google-cloud-sdk/completion.zsh.inc'
+
+function get-docker-machine-interface() {
+  # figure out which interface docker-machine uses as its default gateway
+  set +e
+  for vboxinterface in $(ifconfig -u -l | grep vbox); do
+    ifconfig $vboxinterface | grep 192.168.99 > /dev/null
+    if [ $? -eq 0 ]; then
+      echo $vboxinterface
+    fi
+  done
+  set -e
+}
+
+function verify-route() {
+  set +e
+
+  routeinterface=$(route get 192.168.99.1 | grep interface | grep -o -E '\w+$')
+  echo $routeinterface | grep vbox > /dev/null
+
+  if [ $? -gt 0 ]; then
+    echo "Something (likely AnyConnect) has broken the route to docker-machine."
+    echo $routeinterface | grep utun > /dev/null
+
+    if [ $? -eq 0 ]; then
+      echo "$(tput setaf 3)WARNING: dev environment unavailable while AnyConnect is active$(tput sgr0)"
+      return 1
+    fi
+  fi
+
+  set -e
+}
+
+function repair-route() {
+  vboxinterface=$(get-docker-machine-interface)
+  if [ -z "$vboxinterface" ]; then
+    echo "$(tput setaf 1)Error: docker-machine interface isn't active$(tput sgr0)"
+    return 1
+  else
+    echo "Repairing..."
+    sudo route add -net 192.168.99.0/24 -interface $vboxinterface
+  fi
+}
+
+function fabs() {
+  verify-route
+  if [ $? -gt 0 ]; then
+    repair-route
+  fi
+}
+
+#export HEROKU_ORGANIZATION=heroku-bl-testing
+#
+function td() {
+  (cd ~/; todolist $*)
+}
