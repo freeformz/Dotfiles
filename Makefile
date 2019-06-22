@@ -1,0 +1,2 @@
+install:
+	./sbin/install.sh

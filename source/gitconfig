@@ -1,0 +1,22 @@
+[user]
+	name = Edward Muller
+	email = __EMAIL__
+	signingkey = __KEY__
+[core]
+	editor = code --wait
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	change = codereview change
+	gofmt = codereview gofmt
+	mail = codereview mail
+	pending = codereview pending
+	submit = codereview submit
+	sync = codereview sync
+[http]
+	cookiefile = __HOME__/.gitcookies
+[commit]
+	gpgsign = true
