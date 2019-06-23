@@ -116,8 +116,10 @@ if type rbenv >>&/dev/null; then
 fi
 
 ## heroku (via homebrew)
-alias heroku='PATH="/usr/local/opt/python@2/bin:$PATH" /usr/local/bin/heroku'
-alias h='PATH="/usr/local/opt/python@2/bin:$PATH" /usr/local/bin/heroku'
+if [ -e /usr/local/bin/heroku ]; then
+  alias heroku='PATH="/usr/local/opt/python@2/bin:$PATH" /usr/local/bin/heroku'
+  alias h='PATH="/usr/local/opt/python@2/bin:$PATH" /usr/local/bin/heroku'
+fi
 
 ## Misc 
 unalias gb
@@ -132,5 +134,11 @@ if [ -f ~/.zshrc.work ]; then source ~/.zshrc.work; fi
 GPG_TTY=$(tty)
 export GPG_TTY
 
+
+## Google Cloud
 osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+## One password
+alias opm='eval $(op signin mullers)'
+alias opg='eval $(op signin gobridge)'
