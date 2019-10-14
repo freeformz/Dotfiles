@@ -114,11 +114,26 @@ osource() {
   fi
 }
 
-## go
-addPath "/usr/local/go/bin"
-if type go >>&/dev/null; then
-  addPath "$(go env GOPATH)/bin"
-fi
+setGoVersion $(ls ~/sdk | awk '
+BEGIN { v = 0 }
+{
+    n = split($1,parts,".")
+    num = sprintf("%0.3d%0.3d%0.3d",substr($1,3,1), parts[2], parts[3])
+    if (num > v) {
+        v = num
+    }
+}
+END {
+    maj = substr(num,0,3)
+    min = substr(num,4,3)
+    patch = substr(num,7,3)
+    print patch
+    printf "go%d.%d", maj, min
+    if (patch > "000") {
+        printf ".%d", patch
+    }
+    printf "\n"
+}')
 
 ## homebrew
 addPath "/usr/local/sbin"
