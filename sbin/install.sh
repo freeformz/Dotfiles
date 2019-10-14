@@ -3,7 +3,6 @@
 set -e
 
 typeset -A requirements
-
 requirements=(
   gsed "brew install gnu-sed"
   gpg "brew install gnupg"
@@ -42,7 +41,7 @@ source="${base}/source"
 
 case ${situation} in
   work)
-    files["zshrc.work.gpg"] = "~/.zshrc.work"
+    files[zshrc.work.gpg]="$HOME/.zshrc.work"
     export EMAIL="emuller@salesforce.com"
     export KEY="FC5833DB021899A5"
   ;;
@@ -60,7 +59,7 @@ for f in ${(k)files}; do
   local tgt=${files[$f]}
   if [[ "${f:t:e}" == "gpg" ]]; then
     echo "processing gpg encrypted file: ${f}"
-    gpg --yes --output ${tgt} --decrypt "${source}/$f"
+    gpg --yes --output "${tgt}" --decrypt "${source}/$f"
   else
     cp -f "${source}/$f" ${tgt} 
   fi
