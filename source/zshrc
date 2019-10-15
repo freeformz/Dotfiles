@@ -114,7 +114,12 @@ osource() {
   fi
 }
 
-setGoVersion $(ls ~/sdk | awk '
+## homebrew
+addPath "/usr/local/sbin"
+addPath "/usr/local/opt/gnu-tar/libexec/gnubin"
+addPath "/usr/local/opt/python/libexec/bin"
+
+gv=$(ls ~/sdk | awk '
 BEGIN { v = 0 }
 {
     n = split($1,parts,".")
@@ -124,10 +129,12 @@ BEGIN { v = 0 }
     }
 }
 END {
+    if (num == 0) {
+      exit
+    }
     maj = substr(num,0,3)
     min = substr(num,4,3)
     patch = substr(num,7,3)
-    print patch
     printf "go%d.%d", maj, min
     if (patch > "000") {
         printf ".%d", patch
@@ -135,10 +142,30 @@ END {
     printf "\n"
 }')
 
-## homebrew
-addPath "/usr/local/sbin"
-addPath "/usr/local/opt/gnu-tar/libexec/gnubin"
-addPath "/usr/local/opt/python/libexec/bin"
+installLatestGo() {
+  local arch=$(uname -m)
+  local sys=$(uname -s)
+  local gv=$(curl -s https://golang.org/VERSION\?m=text)
+
+  if [[ "${arch}" == "x86_64" ]]; then
+    arch="amd64"
+  fi
+
+  curl -s https://dl.google.com/go/${gv}.${sys:l}-${arch}.tar.gz | tar zxf - -C $HOME/sdk && mv $HOME/sdk/go $HOME/sdk/${gv} && setGoVersion ${gv}
+}
+
+mkdir -p $HOME/sdk
+if [[ -z "${gv}" ]]; then
+  arch=$(uname -m)
+  if [[ "${arch}" == "x86_64" ]]; then
+    arch="amd64"
+  fi
+  sys=$(uname -s)
+  gv=$(curl -s https://golang.org/VERSION\?m=text)
+  echo -e "No Go SDK installed. To install the latest run: installLatestGo"
+else
+  setGoVersion ${gv}
+fi
 
 ## rbenv
 addPath "$HOME/.rbenv/bin"
