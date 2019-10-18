@@ -87,6 +87,7 @@ source $ZSH/oh-my-zsh.sh
 addPath() {
   local tgt=${1}
   if [ -d "${tgt}" ]; then
+    rmPath ${tgt}
     PATH="${tgt}:$PATH"
   fi
 }
@@ -97,6 +98,7 @@ setGoVersion() {
   if [ -d "${gbd}" ]; then
     # delete any go sdk path items
     PATH="${gbd}:$(printf %s $PATH | awk -v RS=: -v ORS=: 'BEGIN { t="^'$HOME'/sdk/go[0-9]\.[0-9]{1,2}(\.[0-9]{1,2}){1,2}/bin$" } $1!~t { print }')"
+    addPath "$(go env GOPATH)/bin"
   else
     echo "${ver} not found, install with \"go get golang.org/dl/${ver}; ${ver} download\""
   fi
