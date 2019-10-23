@@ -13,6 +13,13 @@ requirements=(
 
 need=()
 
+[[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
+
+if [[ "${situation}" == "work" ]]; then
+  requirements+=(lpass "brew install lastpass-cli")
+fi
+
+
 for r in ${(k)requirements}; do
   if ! type ${r} >>&/dev/null; then
     need+="${requirements[$r]}"
@@ -37,7 +44,6 @@ files=(
 base=$(git rev-parse --show-toplevel)
 source="${base}/source"
 
-[[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
 
 case ${situation} in
   work)
