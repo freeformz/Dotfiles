@@ -93,12 +93,21 @@ addPath() {
 }
 
 setGoVersion() {
+  local sdk="$HOME/sdk"
   local ver="${1}"
-  local gbd="$HOME/sdk/${ver}/bin"
+  local gd="${sdk}/${ver}"
+
+  if [[ -z "$(find ${sdk} -mindepth 1 -print -quit 2>/dev/null)" ]]; then
+    echo "No local go versions found, installing latest version; run: installLatestGo"
+    return
+  fi
+
+  local gbd="${gd}/bin"
   if [ -d "${gbd}" ]; then
     # delete any go sdk path items
     PATH="${gbd}:$(printf %s $PATH | awk -v RS=: -v ORS=: 'BEGIN { t="^'$HOME'/sdk/go[0-9]\.[0-9]{1,2}(\.[0-9]{1,2}){1,2}/bin$" } $1!~t { print }')"
     addPath "$(go env GOPATH)/bin"
+    echo "set $(go version)"
   else
     echo "${ver} not found, install with \"go get golang.org/dl/${ver}; ${ver} download\""
   fi
