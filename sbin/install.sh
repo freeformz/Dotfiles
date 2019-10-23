@@ -9,6 +9,7 @@ requirements=(
   git-lfs "brew install git-lfs"
   go "brew install go"
   git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview"
+  jq "brew install jq"
 )
 
 need=()
