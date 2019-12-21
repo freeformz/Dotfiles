@@ -6,7 +6,6 @@ typeset -A requirements
 requirements=(
   gsed "brew install gnu-sed"
   gpg "brew install gnupg"
-  /usr/local/bin/git "brew install git"
   git-lfs "brew install git-lfs"
   go "brew install go"
   git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview"
@@ -19,7 +18,10 @@ need=()
 
 [[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
 
-[[ $(uname -s) =~ "Darwin" ]] && requirements+=(/usr/local/bin/brew "https://brew.sh")
+if [[ $(uname -s) =~ "Darwin" ]]; then
+  requirements+=(/usr/local/bin/brew "https://brew.sh")
+  requirements+=(/usr/local/bin/git "brew install git")
+fi
 
 if [[ "${situation}" == "work" ]]; then
   requirements+=(lpass "brew install lastpass-cli")
