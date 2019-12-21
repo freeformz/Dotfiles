@@ -12,6 +12,7 @@ requirements=(
   jq "brew install jq"
   keybase "https://keybase.io"
   code "F1 -> Install code command in PATH"
+  docker "https://docker.com"
 )
 
 need=()
@@ -29,7 +30,7 @@ fi
 
 
 for r in ${(k)requirements}; do
-  if ! type ${r} >>&/dev/null; then
+  if ! PATH=/usr/local/bin:$PATH type ${r} >>&/dev/null; then
     need+="${requirements[$r]}"
   fi
 done
