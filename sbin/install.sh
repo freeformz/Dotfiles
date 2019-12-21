@@ -6,15 +6,20 @@ typeset -A requirements
 requirements=(
   gsed "brew install gnu-sed"
   gpg "brew install gnupg"
+  /usr/local/bin/git "brew install git"
   git-lfs "brew install git-lfs"
   go "brew install go"
   git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview"
   jq "brew install jq"
+  keybase "https://keybase.io"
+  code "F1 -> Install code command in PATH"
 )
 
 need=()
 
 [[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
+
+[[ $(uname -s) =~ "Darwin" ]] && requirements+=(/usr/local/bin/brew "https://brew.sh")
 
 if [[ "${situation}" == "work" ]]; then
   requirements+=(lpass "brew install lastpass-cli")
@@ -61,6 +66,14 @@ case ${situation} in
     exit 1
   ;;
 esac
+
+
+if  ! gpg -k ${KEY} &> /dev/null; then
+  echo "Missing key in local keychain. Run:"
+  echo "keybase pgp export -q ${KEY} | gpg --import"
+  echo "keybase pgp export -q ${KEY} --secret | gpg --import --allow-secret-key-import"
+  exit 1
+fi
 
 for f in ${(k)files}; do
   local tgt=${files[$f]}
