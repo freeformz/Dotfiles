@@ -130,6 +130,9 @@ addPath "/usr/local/sbin"
 addPath "/usr/local/opt/gnu-tar/libexec/gnubin"
 addPath "/usr/local/opt/python/libexec/bin"
 
+## rust
+addPath "$HOME/.cargo/bin"
+ -
 gv=$(ls ~/sdk | awk '
 BEGIN { v = 0 }
 {
