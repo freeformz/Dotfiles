@@ -10,7 +10,7 @@ requirements=(
   go "brew install go"
   git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview"
   jq "brew install jq"
-  keybase "https://keybase.io"
+  #keybase "https://keybase.io"
   code "F1 -> Install code command in PATH"
   docker "https://docker.com"
 )

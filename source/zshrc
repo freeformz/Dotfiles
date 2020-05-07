@@ -217,7 +217,7 @@ alias opg='eval $(op signin gobridge)'
 
 ## Todoist
 declare -i todoistSyncDelay=60
-export $todoistSyncDelay
+export todoistSyncDelay
 declare todoistProject=""
 export todoistProject
 syncTodoist() {
