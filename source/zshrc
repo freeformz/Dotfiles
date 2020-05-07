@@ -132,7 +132,8 @@ addPath "/usr/local/opt/python/libexec/bin"
 
 ## rust
 addPath "$HOME/.cargo/bin"
- -
+
+## golang
 gv=$(ls ~/sdk | awk '
 BEGIN { v = 0 }
 {
@@ -206,7 +207,6 @@ if [ -f ~/.zshrc.work ]; then source ~/.zshrc.work; fi
 GPG_TTY=$(tty)
 export GPG_TTY
 
-
 ## Google Cloud
 osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
@@ -214,3 +214,54 @@ osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion
 ## One password
 alias opm='eval $(op signin mullers)'
 alias opg='eval $(op signin gobridge)'
+
+## Todoist
+declare -i todoistSyncDelay=60
+export $todoistSyncDelay
+declare todoistProject=""
+export todoistProject
+syncTodoist() {
+  declare force=$1
+  declare syncFile="$HOME/.todoist.sync"
+  declare -i now=$(date +'%s')
+  declare -i last=0
+  if [[ -e $syncFile ]]; then
+    last=$(stat -f "%m" -t %s $syncFile)
+  fi
+  declare -i diff=$(( now - last ))
+  if [[ ! -z "$force" ]] || (( diff > $todoistSyncDelay )); then
+    todoist sync
+    touch $syncFile
+  fi
+}
+
+today() {
+  syncTodoist
+  declare -a filter=(today $*)
+  echo $filter
+  todoist l -f $filter
+}
+
+overdue() {
+  syncTodoist
+  declare -a filter=(overdue)
+  if [[ -z "$*" ]]; then
+    if [[ ! -z "${todoistProject}" ]]; then
+      filter+=("& #${todoistProject}")
+      echo "** Filtered to Project (via \$todoistProject): #${todoistProject}"
+    fi
+  else
+    for i in $*; do
+      #echo $i
+      case $i in
+        (#*) filter+=("& $i")
+            ;;
+        (*) fitler+=($i)
+            ;;
+      esac
+      #echo ${filter}
+    done
+  fi
+  #echo ${filter}
+  todoist l -f "${filter}"
+}

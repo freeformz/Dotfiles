@@ -72,7 +72,7 @@ esac
 
 
 if  ! gpg -k ${KEY} &> /dev/null; then
-  echo "Missing key in local keychain. Run:"
+  echo "Missing key in local keychain. Install keybase, then run:"
   echo "keybase pgp export -q ${KEY} | gpg --import"
   echo "keybase pgp export -q ${KEY} --secret | gpg --import --allow-secret-key-import"
   exit 1
@@ -80,13 +80,16 @@ fi
 
 for f in ${(k)files}; do
   local tgt=${files[$f]}
+  local tmp=$(mktemp)
   if [[ "${f:t:e}" == "gpg" ]]; then
     echo "processing gpg encrypted file: ${f}"
-    gpg --yes --output "${tgt}" --decrypt "${source}/$f"
+    gpg --yes --output "${tmp}" --decrypt "${source}/$f"
   else
-    cp -f "${source}/$f" ${tgt} 
+    cp -f "${source}/$f" ${tmp}
   fi
-  gsed -i -e "s:__HOME__:${HOME}:g" ${tgt}
-  gsed -i -e "s:__EMAIL__:${EMAIL}:g" ${tgt}
-  gsed -i -e "s:__KEY__:${KEY}:g" ${tgt}
+  gsed -i -e "s:__HOME__:${HOME}:g" ${tmp}
+  gsed -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
+  gsed -i -e "s:__KEY__:${KEY}:g" ${tmp}
+
+  diff -p ${tgt} ${tmp} | patch -p0
 done
