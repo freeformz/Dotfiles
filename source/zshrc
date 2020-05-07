@@ -198,9 +198,6 @@ fi
 unalias gb
 alias gcdr="cd $(git rev-parse --show-toplevel)"
 
-## Work specific
-if [ -f ~/.zshrc.work ]; then source ~/.zshrc.work; fi
-
 ## GPG
 # https://github.com/pstadler/keybase-gpg-github#optional-setting-up-tty
 # https://github.com/keybase/keybase-issues/issues/2798
@@ -265,3 +262,7 @@ overdue() {
   #echo ${filter}
   todoist l -f "${filter}"
 }
+
+## Work specific, keep at bottom
+if [ -f ~/.zshrc.work ]; then source ~/.zshrc.work; fi
+

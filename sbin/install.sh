@@ -91,5 +91,11 @@ for f in ${(k)files}; do
   gsed -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
   gsed -i -e "s:__KEY__:${KEY}:g" ${tmp}
 
+  # ensure the file exists or diff complains
+  if [[ ! -e ${tgt} ]]; then
+    touch ${tgt}
+  fi
+
+  # diff/patch to get some interactivity in case there is a conflict
   diff -p ${tgt} ${tmp} | patch -p0
 done
