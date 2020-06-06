@@ -3,25 +3,36 @@
 set -e
 
 typeset -A requirements
-requirements=(
-  gsed "brew install gnu-sed"
-  gpg "brew install gnupg"
-  git-lfs "brew install git-lfs"
-  go "brew install go"
-  git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview"
-  jq "brew install jq"
-  #keybase "https://keybase.io"
-  code "F1 -> Install code command in PATH"
-  docker "https://docker.com"
-)
-
+requirements=()
 need=()
 
 [[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
 
 if [[ $(uname -s) =~ "Darwin" ]]; then
+  SED=gsed
+  requirements+=(gpg "brew install gnupg")
+  requirements+=(git-lfs "brew install git-lfs")
+  requirements+=(git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview")
+  requirements+=(jq "brew install jq")
+  #requirements+=(keybase "https://keybase.io")
+  requirements+=(code "F1 -> Install code command in PATH")
+  requirements+=(docker "https://docker.com")
+  requirements+=(gsed "brew install gnu-sed")
   requirements+=(/usr/local/bin/brew "https://brew.sh")
   requirements+=(/usr/local/bin/git "brew install git")
+fi
+
+if [[ $(uname -s) == "Linux" ]]; then
+  SED=sed
+  requirements+=(gpg "apt-get install gpg")
+  requirements+=(git-lfs "apt-get install git-lfs")
+  #requirements+=(git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview")
+  requirements+=(jq "apt-get install jq")
+  requirements+=(keybase "https://keybase.io/docs/the_app/install_linux")
+  #requirements+=(code "F1 -> Install code command in PATH")
+  requirements+=(docker "https://docker.com")
+  requirements+=(sed "apt-get install sed")
+  requirements+=(git "apt-get install git")
 fi
 
 if [[ "${situation}" == "work" ]]; then
@@ -87,9 +98,9 @@ for f in ${(k)files}; do
   else
     cp -f "${source}/$f" ${tmp}
   fi
-  gsed -i -e "s:__HOME__:${HOME}:g" ${tmp}
-  gsed -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
-  gsed -i -e "s:__KEY__:${KEY}:g" ${tmp}
+  $SED -i -e "s:__HOME__:${HOME}:g" ${tmp}
+  $SED -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
+  $SED -i -e "s:__KEY__:${KEY}:g" ${tmp}
 
   # ensure the file exists or diff complains
   if [[ ! -e ${tgt} ]]; then
@@ -97,5 +108,5 @@ for f in ${(k)files}; do
   fi
 
   # diff/patch to get some interactivity in case there is a conflict
-  diff -p ${tgt} ${tmp} | patch -p0
+  diff -p ${tgt} ${tmp} | patch ${tgt}
 done
